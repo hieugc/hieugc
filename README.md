@@ -1,7 +1,5 @@
 - 👋 Hi, I’m @hieugc
-- 👀 I’m interested in C++
 - 🌱 I’m currently learning Ho Chi Minh City University of Technology (HCMUT)
-- 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me on Facebook with link: http:/fb.com/phamminhhieu1594
 
 <!---
