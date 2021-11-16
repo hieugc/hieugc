@@ -1,0 +1,395 @@
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+    /*---------------------nav------------------*/
+    pre{
+        font-family: sans-serif;
+        font-size: medium;
+    }
+    .contain{
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .nav{
+        display: flex;
+        background-color: #534d64;
+        text-align: center;
+        color: white;
+        height: 60px;
+        font-size: medium;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .nav .func{
+        flex: 65%;
+        display: flex;
+    }
+    .nav .func div{
+        flex: 20%;
+        max-width: 120px;
+        height: 100%;
+        padding: 15px 0;
+        cursor: pointer;
+    }
+    .nav .signout{
+        flex: 35%;
+        text-align: right;
+        padding-right: 10px;
+        margin: auto 0;
+        cursor: pointer;
+    }
+    .nav .func div:hover{
+        background-color: #a494d3;
+        border-bottom: 3px solid #373244;
+    }
+    .nav .signout:hover{
+        font-size: large;
+    }
+    /*---------------------main-------------------*/
+    .main{
+        margin-top: 2px;
+        min-height: 200px;
+        border: 1px solid #373244;
+        max-width: 100%;
+    }
+    .main .title{
+        text-align: center;
+        height: 50px;
+    }
+    .main > div{
+        max-width: 100%;
+    }
+    /*---------------------main revenue----------------------------------*/
+    .row.column{
+        flex-flow: column wrap;
+    }
+    h2.backgr{
+        background-color: #352952;
+        text-align: center;
+        color: white;
+    }
+    .padnone{
+        padding: 0 !important;
+    }
+    .click{
+        cursor: pointer;
+        background-color: #946feb !important;
+        border-color: #946feb !important;
+        border-radius: 5px;
+        color: black !important; 
+    }
+    .click.pad{
+        padding: 8px 20px;
+    }
+    .click:hover{
+        background-color: #352952 !important;
+        color: black !important;
+    }
+    .max-width{
+        max-width: 400px !important;
+        margin: 0 auto;
+    }
+    .width-100{
+        max-width: 100% !important;
+    }
+    .mg-l{
+        margin-left: 0 !important;
+    }
+    .mg-r{
+        margin-right: 0 !important;
+    }
+    input{
+        width: 100%;
+        max-width: 100%;
+    }
+    #chartLine{
+        overflow: auto;
+        max-width: 100%;
+        margin: 20px;
+    }
+    #chartLine::-webkit-scrollbar{
+        width: 0px;
+        height: 4px;
+        margin-top: 10px;
+    }
+    #chartLine::-webkit-scrollbar-track{
+        box-shadow: inset 0 0 5px grey; 
+        border-radius: 10px;
+    }
+    #chartLine::-webkit-scrollbar-thumb{
+        background: #946feb;
+        border-radius: 10px;
+    }
+    #chartLine::-webkit-scrollbar-thumb:hover{
+        background: #352952;
+        color: white;
+    }
+    .container-fluid{
+        min-height: 80vh;
+        justify-content: space-between;
+    }
+    #table{
+        margin: 20px;
+    }
+    #next{
+        margin: 10px;
+    }
+    #next *{
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    #next .item:hover{
+        background-color: #946feb;
+    }
+    #next .next:hover,
+    #next .prev:hover{
+        color: #352952;
+    }
+    /*---------------------main end revenue----------------------------------*/
+
+    /*---------------------main Menu----------------------------------*/
+    .main .menu{
+        display: none;
+    }
+    /*---------------------main Menu add button----------------------------------*/
+    .main .behavior .add-food{
+        margin: 10px;
+        max-width: 130px;
+        padding: 7px;
+        border-radius: 5px;
+        color: rgba(255, 255, 255, 0.719);
+        box-shadow: 1px 1px 5px #352952;
+        background-color: #352952;
+        cursor: pointer;
+    }
+    /*---------------------main Menu form input----------------------------------*/
+    .main .behavior > .input{
+        border: 1px dotted #352952;
+        margin: 10px;
+        max-width: 500px;
+        display: none;
+    }
+    .main .behavior > .input .img{
+        margin: 7px 0;
+        min-height: 40px;
+        width: 100%;
+        cursor: pointer;
+    }
+    .main .behavior > .input .img *{
+        cursor: pointer;
+    }
+    .main .behavior > .input .info{
+        margin-top: 5px;
+        border-bottom: 2px solid #352952;
+    }
+    .main .behavior > .input .info div{
+        display: flex;
+        min-height: 22px;
+        margin: 3px;
+    }
+    .main .behavior > .input .info div .label{
+        width: 25%;
+        max-width: 130px;
+    }
+    .main .behavior > .input .info div .value{
+        overflow: hidden;
+        width: 75%;
+        border: 1px solid rgba(75, 54, 54, 0.322);
+    }
+    .main .behavior > .input .info div .value *{
+        max-width: 100%;
+        min-width: 100%;
+        font-size: small;
+    }
+    .main .behavior > .input .info div .value textarea{
+        min-width: 100%;
+        max-width: 300px;
+        min-height: 100px;
+        max-height: 300px;
+    }
+    .main .behavior > .input .bot{
+        display: flex;
+    }
+    .main .behavior > .input .bot > div{
+        text-align: center;
+        height: 40px;
+        overflow: hidden;
+        width: 150px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        color: rgba(255, 255, 255, 0.719);
+        box-shadow: 1px 1px 5px #352952;
+        font-size: medium;
+        background-color: #946feb;
+        cursor: pointer;
+    }
+    .main .behavior > .input .bot > div > input:nth-child(1){
+        border: none;
+        background-color: #946feb;
+        color: white;
+    }
+    /*---------------------main Menu list----------------------------------*/
+    img{
+        height: 240px !important;
+        width: 100% !important;
+        object-fit: contain, scale-down;
+    }
+    .main .list{
+        min-height: 350px;
+        max-height: 1300px;
+        margin: 5px 30px;
+        overflow: auto;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(325px, 1fr));
+    }
+    .scroll-bar::-webkit-scrollbar{
+        width: 10px;
+    }
+    .scroll-bar::-webkit-scrollbar-track{
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+    }
+    .scroll-bar::-webkit-scrollbar-thumb{
+        background: #352952;
+        border-radius: 10px;
+    }
+    .scroll-bar::-webkit-scrollbar-thumb:hover {
+        background: #73619e;
+    }
+    .main .list > .node{
+        margin: 10px auto;
+        border: 2px solid #352952;
+        box-shadow: 1px 1px 5px #352952;
+        width: 325px;
+        max-width: 325px;
+    }
+    .main .list .node .img{
+        margin: 0 2px;
+        min-height: 200px;
+        border-radius: 5px;
+        background-color: #352952;
+    }
+    .main .list .node .img *{
+        cursor: pointer;
+    }
+    .main .list .node .info{
+        margin-top: 5px;
+        border-bottom: 2px solid #352952;
+    }
+    .main .list .node .info div{
+        display: flex;
+        min-height: 22px;
+        margin: 3px;
+    }
+    .main .list .node .info div .label{
+        flex: 25%;
+        font-size: medium;
+        text-align: left;
+    }
+    .main .list .node .info div .value{
+        flex: 75%;
+        border: 1px solid rgba(75, 54, 54, 0.322);
+    }
+    .main .list .node .info div .value input{
+        min-width: 100%;
+        display: none;
+    }
+    .main .list .node .info div .value textarea{
+        min-width: 100%;
+        max-width: 221px;
+        min-height: 100px;  
+        max-height: 225px;
+        display: none;
+    }
+    .main .list .node .info .desc{
+        min-height: 100px;
+        max-height: 300px;
+    }
+    .main .list .node .control{
+        display: flex;
+        margin: 5px;
+        min-height: 40px;
+    }
+    .main .list .node .control > div{
+        flex: 30%;
+        max-width: 40%;
+        text-align: center;
+        padding-top: 10px;
+        margin-left: 10px;
+        border-radius: 5px;
+        color: rgba(255, 255, 255, 0.719);
+        box-shadow: 1px 1px 5px #352952;
+        font-size: medium;
+        background-color: #946feb;
+        cursor: pointer;
+    }
+    /*---------------------main end Menu----------------------------------*/
+    /*---------------------main Employee----------------------------------*/
+    .main .employee{
+        display: none;
+    }
+    .main .behavior .add-employee{
+        max-width: 150px;
+        margin: 10px;
+        padding: 7px;
+        border-radius: 5px;
+        color: rgba(255, 255, 255, 0.719);
+        box-shadow: 1px 1px 5px #352952;
+        background-color: #352952;
+        cursor: pointer;
+    }
+    /*---------------------main Menu list----------------------------------*/
+    .main .employee .list .node .info div .label{
+        flex: 30%;
+    }
+    .main .employee .list .node .info div .value{
+        flex: 70%;
+    }
+    .main .employee .list .node .info div .value select{
+        width: 100%;
+        display: none;
+    }
+    /*---------------------main end Employee---------------------------------*/
+    /* The alert message box */
+    .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        margin-bottom: 15px;
+    }
+    
+    /* The close button */
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }
+    /*-----------------------------------------------------------------------*/
+    @media screen and (max-width: 420px) {
+        .main .list{
+            margin: 5px 0px !important;
+        }
+        #scroll-bar::-webkit-scrollbar{
+            width: 5px !important;
+        }
+    }
+    @media screen and (min-width: 400px) {
+        .signout:hover{
+            font-size: larger;
+        }
+    }
