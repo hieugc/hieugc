@@ -1,9 +1,11 @@
 <?php
-if(!isset($_SESSION["user"]) && !isset($_SESSION["pwd"])  && isset($_POST["pwd"]) && isset($_POST["user"])){
+if(!isset($_SESSION["user"]) && !isset($_SESSION["pwd"]) && isset($_POST["pwd"]) && $_POST["pwd"] != "" && isset($_POST["user"]) && $_POST["user"] != ""){
     $_SESSION["user"] = $_POST["user"];
     $_SESSION["pwd"] = $_POST["pwd"];
 }
-else header("location: login.php");
+else{
+    header("location: login.php");
+}
 ?>
 
 
