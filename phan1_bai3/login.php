@@ -13,17 +13,21 @@
     </style>
 </head>
 <body>
-
+<?php if(isset($_SESSION["notice"]) && $_SESSION["notice"] == "fail"): ?>
+<div class="alert alert-danger text-center">
+  <strong>Đăng nhập thất bại!</strong>
+</div>
+<?php endif; ?>
 <div class="container mt-3">
   <h2>Login form</h2>
   <form action="./info.php" method="POST">
     <div class="mb-3 mt-3">
       <label for="user">User name:</label>
-      <input type="text" class="form-control" id="user" placeholder="Enter user" name="user">
+      <input type="text" class="form-control" id="user" placeholder="Enter any username which you want" name="user">
     </div>
     <div class="mb-3">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      <input type="password" class="form-control" id="pwd" placeholder="Enter any password which you want" name="pwd">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
