@@ -4,6 +4,7 @@ if(!isset($_SESSION["user"]) && !isset($_SESSION["pwd"]) && isset($_POST["pwd"])
     $_SESSION["pwd"] = $_POST["pwd"];
 }
 else{
+    $_SESSION["notice"] = "fail";
     header("location: login.php");
 }
 ?>
