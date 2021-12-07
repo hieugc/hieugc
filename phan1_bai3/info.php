@@ -1,11 +1,15 @@
 <?php
-if(!isset($_SESSION["user"]) && !isset($_SESSION["pwd"]) && isset($_POST["pwd"]) && $_POST["pwd"] != "" && isset($_POST["user"]) && $_POST["user"] != ""){
+session_start();
+if(!isset($_SESSION["user"]) && !isset($_SESSION["pwd"]) && isset($_POST["pwd"]) && $_POST["pwd"] != "" && isset($_POST["user"]) && $_POST["user"] != "" || isset($_SESSION["notice"]) && $_SESSION["notice"] == "success"){
     $_SESSION["user"] = $_POST["user"];
     $_SESSION["pwd"] = $_POST["pwd"];
+    $_SESSION["notice"] = "success";
+    unset($_POST["user"]);
+    unset($_POST["pwd"]);
 }
 else{
     $_SESSION["notice"] = "fail";
-    header("location: login.php");
+    header("location: ./login.php");
 }
 ?>
 
@@ -31,11 +35,11 @@ else{
   <form action="./logout.php" method="POST">
     <div class="mb-3 mt-3">
       <label for="user">User name:</label>
-      <input type="text" class="form-control" id="user" name="user" value="<?php echo $_POST["user"]; ?>" disabled>
+      <input type="text" class="form-control" id="user" name="user" value="<?php echo $_SESSION["user"]; ?>" disabled>
     </div>
     <div class="mb-3">
       <label for="pwd">Password:</label>
-      <input type="text" class="form-control" id="pwd" name="pwd" value="<?php echo $_POST["pwd"]; ?>" disabled>
+      <input type="text" class="form-control" id="pwd" name="pwd" value="<?php echo $_SESSION["pwd"]; ?>" disabled>
     </div>
     <button type="submit" class="btn btn-primary">Logout</button>
   </form>
