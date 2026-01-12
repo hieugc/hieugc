@@ -1,0 +1,38 @@
+name: hieu_portfolio
+description: Professional portfolio website for Pham Minh Hieu - .NET Software Engineer
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI & Styling
+  google_fonts: ^6.1.0
+  font_awesome_flutter: ^10.6.0
+
+  # Animations
+  animated_text_kit: ^4.2.2
+  visibility_detector: ^0.4.0+2
+
+  # Navigation & URL
+  url_launcher: ^6.2.2
+  scroll_to_index: ^3.0.1
+
+  # Responsive
+  responsive_framework: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/projects/
+    - assets/documents/
