@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 
 class StatisticsSection extends StatelessWidget {
-  const StatisticsSection({super.key});
+  final LanguageService languageService;
+
+  const StatisticsSection({
+    super.key,
+    required this.languageService,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
     final columns = Responsive.gridColumns(context, mobile: 2, tablet: 4, desktop: 4);
+    final stats = languageService.statistics;
 
     return Container(
       constraints: Responsive.contentConstraints(),
@@ -23,10 +29,13 @@ class StatisticsSection extends StatelessWidget {
           mainAxisSpacing: 20,
           childAspectRatio: isMobile ? 1.5 : 1.8,
         ),
-        itemCount: PortfolioData.statistics.length,
+        itemCount: stats.length,
         itemBuilder: (context, index) {
-          final stat = PortfolioData.statistics[index];
-          return _StatCard(statistic: stat);
+          final stat = stats[index];
+          return _StatCard(
+            value: stat['value'] ?? '',
+            label: stat['label'] ?? '',
+          );
         },
       ),
     );
@@ -34,9 +43,13 @@ class StatisticsSection extends StatelessWidget {
 }
 
 class _StatCard extends StatefulWidget {
-  final statistic;
+  final String value;
+  final String label;
 
-  const _StatCard({required this.statistic});
+  const _StatCard({
+    required this.value,
+    required this.label,
+  });
 
   @override
   State<_StatCard> createState() => _StatCardState();
@@ -74,14 +87,8 @@ class _StatCardState extends State<_StatCard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              widget.statistic.icon,
-              size: 40,
-              color: _isHovered ? AppColors.accent : AppColors.textSecondary,
-            ),
-            const SizedBox(height: 16),
             Text(
-              widget.statistic.value,
+              widget.value,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 32,
@@ -91,7 +98,7 @@ class _StatCardState extends State<_StatCard> {
             ),
             const SizedBox(height: 8),
             Text(
-              widget.statistic.label,
+              widget.label,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 14,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../config/colors.dart';
+import '../services/language_service.dart';
 import '../widgets/navigation/portfolio_app_bar.dart';
 import '../widgets/navigation/mobile_drawer.dart';
 import '../widgets/sections/hero_section.dart';
@@ -12,7 +13,12 @@ import '../widgets/sections/experience_section.dart';
 import '../widgets/sections/footer_section.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final LanguageService languageService;
+
+  const HomeScreen({
+    super.key,
+    required this.languageService,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,12 +36,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
       axis: Axis.vertical,
     );
+    widget.languageService.addListener(_onLanguageChanged);
   }
 
   @override
   void dispose() {
+    widget.languageService.removeListener(_onLanguageChanged);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onLanguageChanged() {
+    setState(() {});
   }
 
   Future<void> _scrollToSection(int index) async {
@@ -48,10 +60,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final langService = widget.languageService;
+
+    if (langService.isLoading) {
+      return Scaffold(
+        backgroundColor: AppColors.primaryBg,
+        body: const Center(
+          child: CircularProgressIndicator(color: AppColors.accent),
+        ),
+      );
+    }
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.primaryBg,
-      endDrawer: MobileDrawer(onMenuTap: _scrollToSection),
+      endDrawer: MobileDrawer(
+        onMenuTap: _scrollToSection,
+        languageService: langService,
+      ),
       body: Stack(
         children: [
           // Main Content
@@ -60,57 +86,58 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Hero Section (Index 0)
               AutoScrollTag(
-                key: ValueKey(0),
+                key: const ValueKey(0),
                 controller: _scrollController,
                 index: 0,
                 child: HeroSection(
                   onViewWorkPressed: () => _scrollToSection(1),
+                  languageService: langService,
                 ),
               ),
 
               const SizedBox(height: 80),
 
               // Statistics Section
-              const StatisticsSection(),
+              StatisticsSection(languageService: langService),
 
               const SizedBox(height: 80),
 
               // Services Section
-              const ServicesSection(),
+              ServicesSection(languageService: langService),
 
               const SizedBox(height: 80),
 
               // Projects Section (Index 1)
               AutoScrollTag(
-                key: ValueKey(1),
+                key: const ValueKey(1),
                 controller: _scrollController,
                 index: 1,
-                child: const ProjectsSection(),
+                child: ProjectsSection(languageService: langService),
               ),
 
               const SizedBox(height: 80),
 
               // Skills Section
-              const SkillsSection(),
+              SkillsSection(languageService: langService),
 
               const SizedBox(height: 80),
 
               // Experience & Education Section (Index 2)
               AutoScrollTag(
-                key: ValueKey(2),
+                key: const ValueKey(2),
                 controller: _scrollController,
                 index: 2,
-                child: const ExperienceSection(),
+                child: ExperienceSection(languageService: langService),
               ),
 
               const SizedBox(height: 80),
 
               // Footer/Contact Section (Index 4)
               AutoScrollTag(
-                key: ValueKey(4),
+                key: const ValueKey(4),
                 controller: _scrollController,
                 index: 4,
-                child: const FooterSection(),
+                child: FooterSection(languageService: langService),
               ),
             ],
           ),
@@ -124,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: PortfolioAppBar(
                 scrollController: _scrollController,
                 onMenuTap: _scrollToSection,
+                languageService: langService,
               ),
             ),
           ),

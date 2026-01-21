@@ -3,16 +3,18 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 import '../common/custom_button.dart';
 import '../common/social_icon_button.dart';
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onViewWorkPressed;
+  final LanguageService languageService;
 
   const HeroSection({
     super.key,
     required this.onViewWorkPressed,
+    required this.languageService,
   });
 
   @override
@@ -35,8 +37,6 @@ class HeroSection extends StatelessWidget {
         _buildProfileImage(context, size: 200),
         const SizedBox(height: 40),
         _buildHeroContent(context),
-        const SizedBox(height: 40),
-        _buildCompanyLogos(context),
       ],
     );
   }
@@ -55,8 +55,6 @@ class HeroSection extends StatelessWidget {
           child: Column(
             children: [
               _buildProfileImage(context, size: 350),
-              const SizedBox(height: 40),
-              _buildCompanyLogos(context),
             ],
           ),
         ),
@@ -85,8 +83,18 @@ class HeroSection extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Image.asset(
-          PortfolioData.avatarPath,
+          languageService.avatarPath,
           fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: AppColors.cardBg,
+              child: const Icon(
+                Icons.person,
+                size: 100,
+                color: AppColors.textSecondary,
+              ),
+            );
+          },
         ),
       ),
     );
@@ -100,7 +108,7 @@ class HeroSection extends StatelessWidget {
           isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Text(
-          "I'm",
+          languageService.isVietnamese ? "Tôi là" : "I'm",
           textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: TextStyle(
             fontSize: isMobile ? 24 : 32,
@@ -110,7 +118,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          PortfolioData.name,
+          languageService.name,
           textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: TextStyle(
             fontSize: isMobile ? 36 : 56,
@@ -130,7 +138,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          PortfolioData.title,
+          languageService.title,
           textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: TextStyle(
             fontSize: isMobile ? 20 : 24,
@@ -142,16 +150,17 @@ class HeroSection extends StatelessWidget {
         SizedBox(
           width: isMobile ? double.infinity : 600,
           child: AnimatedTextKit(
+            key: ValueKey(languageService.currentLanguage),
             animatedTexts: [
               TypewriterAnimatedText(
-                PortfolioData.tagline,
+                languageService.summary,
                 textAlign: isMobile ? TextAlign.center : TextAlign.start,
                 textStyle: TextStyle(
                   fontSize: isMobile ? 14 : 16,
                   color: AppColors.textSecondary,
                   height: 1.6,
                 ),
-                speed: const Duration(milliseconds: 50),
+                speed: const Duration(milliseconds: 30),
               ),
             ],
             totalRepeatCount: 1,
@@ -161,7 +170,7 @@ class HeroSection extends StatelessWidget {
         _buildSocialLinks(context),
         const SizedBox(height: 32),
         CustomButton(
-          text: PortfolioData.ctaButtonText,
+          text: languageService.viewWorkButton,
           onPressed: onViewWorkPressed,
           icon: Icons.arrow_forward,
         ),
@@ -178,48 +187,15 @@ class HeroSection extends StatelessWidget {
       children: [
         SocialIconButton(
           icon: FontAwesomeIcons.github,
-          url: PortfolioData.github,
+          url: languageService.github,
           color: AppColors.github,
         ),
         SocialIconButton(
           icon: FontAwesomeIcons.envelope,
-          url: PortfolioData.socialLinks['email']!,
+          url: 'mailto:${languageService.email}',
           color: AppColors.email,
         ),
       ],
-    );
-  }
-
-  Widget _buildCompanyLogos(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 20,
-      runSpacing: 20,
-      children: [
-        _buildCompanyLogo('Meta'),
-        _buildCompanyLogo('Google'),
-        _buildCompanyLogo('LinkedIn'),
-        _buildCompanyLogo('Slack'),
-      ],
-    );
-  }
-
-  Widget _buildCompanyLogo(String name) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Text(
-        name,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textSecondary,
-        ),
-      ),
     );
   }
 }

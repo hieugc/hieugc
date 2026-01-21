@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
+import '../common/language_toggle.dart';
 
 class PortfolioAppBar extends StatefulWidget {
   final ScrollController scrollController;
   final Function(int) onMenuTap;
+  final LanguageService languageService;
 
   const PortfolioAppBar({
     super.key,
     required this.scrollController,
     required this.onMenuTap,
+    required this.languageService,
   });
 
   @override
@@ -84,7 +87,7 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
                 const SizedBox(width: 12),
                 if (!isMobile)
                   Text(
-                    PortfolioData.name,
+                    widget.languageService.name,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -99,35 +102,43 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
               Row(
                 children: [
                   _NavItem(
-                    text: 'Home',
+                    text: widget.languageService.navHome,
                     onTap: () => widget.onMenuTap(0),
                   ),
                   _NavItem(
-                    text: 'Portfolio',
+                    text: widget.languageService.navPortfolio,
                     onTap: () => widget.onMenuTap(1),
                   ),
                   _NavItem(
-                    text: 'Experience',
+                    text: widget.languageService.navExperience,
                     onTap: () => widget.onMenuTap(2),
                   ),
                   _NavItem(
-                    text: 'About',
+                    text: widget.languageService.navAbout,
                     onTap: () => widget.onMenuTap(3),
                   ),
                   _NavItem(
-                    text: 'Contact',
+                    text: widget.languageService.navContact,
                     onTap: () => widget.onMenuTap(4),
                   ),
+                  const SizedBox(width: 16),
+                  LanguageToggle(languageService: widget.languageService),
                 ],
               )
             else
-              // Mobile Menu Button
-              IconButton(
-                icon: const Icon(Icons.menu),
-                color: AppColors.textPrimary,
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
+              Row(
+                children: [
+                  LanguageToggle(languageService: widget.languageService),
+                  const SizedBox(width: 8),
+                  // Mobile Menu Button
+                  IconButton(
+                    icon: const Icon(Icons.menu),
+                    color: AppColors.textPrimary,
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
+                ],
               ),
           ],
         ),

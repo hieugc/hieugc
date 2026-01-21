@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 
 class MobileDrawer extends StatelessWidget {
   final Function(int) onMenuTap;
+  final LanguageService languageService;
 
   const MobileDrawer({
     super.key,
     required this.onMenuTap,
+    required this.languageService,
   });
 
   @override
@@ -45,7 +47,7 @@ class MobileDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          PortfolioData.name,
+                          languageService.name,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -54,7 +56,7 @@ class MobileDrawer extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          PortfolioData.title,
+                          languageService.title,
                           style: const TextStyle(
                             fontSize: 12,
                             color: AppColors.textSecondary,
@@ -74,7 +76,7 @@ class MobileDrawer extends StatelessWidget {
                 children: [
                   _DrawerItem(
                     icon: Icons.home_outlined,
-                    text: 'Home',
+                    text: languageService.navHome,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(0);
@@ -82,7 +84,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                   _DrawerItem(
                     icon: Icons.folder_outlined,
-                    text: 'Portfolio',
+                    text: languageService.navPortfolio,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(1);
@@ -90,7 +92,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                   _DrawerItem(
                     icon: Icons.work_outline,
-                    text: 'Experience',
+                    text: languageService.navExperience,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(2);
@@ -98,7 +100,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                   _DrawerItem(
                     icon: Icons.person_outline,
-                    text: 'About',
+                    text: languageService.navAbout,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(3);
@@ -106,7 +108,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                   _DrawerItem(
                     icon: Icons.mail_outline,
-                    text: 'Contact',
+                    text: languageService.navContact,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(4);
@@ -127,9 +129,9 @@ class MobileDrawer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Contact',
-                    style: TextStyle(
+                  Text(
+                    languageService.navContact,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -137,7 +139,7 @@ class MobileDrawer extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    PortfolioData.email,
+                    languageService.email,
                     style: const TextStyle(
                       fontSize: 12,
                       color: AppColors.textSecondary,

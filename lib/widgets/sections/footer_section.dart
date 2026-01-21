@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 import '../common/custom_button.dart';
 import '../common/social_icon_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FooterSection extends StatelessWidget {
-  const FooterSection({super.key});
+  final LanguageService languageService;
+
+  const FooterSection({
+    super.key,
+    required this.languageService,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class FooterSection extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              PortfolioData.contactTitle,
+              languageService.contactTitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: isMobile ? 28 : 40,
@@ -39,20 +44,20 @@ class FooterSection extends StatelessWidget {
               children: [
                 SocialIconButton(
                   icon: FontAwesomeIcons.github,
-                  url: PortfolioData.github,
+                  url: languageService.github,
                   color: AppColors.github,
                 ),
                 SocialIconButton(
                   icon: FontAwesomeIcons.envelope,
-                  url: PortfolioData.socialLinks['email']!,
+                  url: languageService.socialLinks['email']!,
                   color: AppColors.email,
                 ),
               ],
             ),
             const SizedBox(height: 32),
             CustomButton(
-              text: PortfolioData.downloadResumeButton,
-              onPressed: _downloadResume,
+              text: languageService.downloadResumeButton,
+              onPressed: () => _downloadResume(languageService.resumePath),
               icon: Icons.download,
             ),
             const SizedBox(height: 60),
@@ -66,7 +71,7 @@ class FooterSection extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    PortfolioData.name,
+                    languageService.name,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -75,7 +80,7 @@ class FooterSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    PortfolioData.email,
+                    languageService.email,
                     style: const TextStyle(
                       fontSize: 14,
                       color: AppColors.textSecondary,
@@ -83,7 +88,7 @@ class FooterSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '© ${DateTime.now().year} ${PortfolioData.name}. All rights reserved.',
+                    '© ${DateTime.now().year} ${languageService.name}. All rights reserved.',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 12,
@@ -99,10 +104,8 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Future<void> _downloadResume() async {
-    // In a real app, this would download the PDF
-    // For now, we'll just open it in a new tab
-    final uri = Uri.parse('assets/documents/PhamMinhHieu_Fullstack_net.pdf');
+  Future<void> _downloadResume(String resumePath) async {
+    final uri = Uri.parse(resumePath);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }

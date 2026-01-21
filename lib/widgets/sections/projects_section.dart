@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 import '../common/section_title.dart';
 import '../common/animated_card.dart';
 
 class ProjectsSection extends StatelessWidget {
-  const ProjectsSection({super.key});
+  final LanguageService languageService;
+
+  const ProjectsSection({
+    super.key,
+    required this.languageService,
+  });
 
   @override
   Widget build(BuildContext context) {
     final columns = Responsive.gridColumns(context, mobile: 1, tablet: 2, desktop: 2);
+    final projects = languageService.projects;
 
     return Container(
       color: AppColors.cardBg.withOpacity(0.3),
@@ -20,7 +26,7 @@ class ProjectsSection extends StatelessWidget {
         padding: Responsive.pagePadding(context),
         child: Column(
           children: [
-            const SectionTitle(title: 'Featured Projects'),
+            SectionTitle(title: languageService.projectsTitle),
             const SizedBox(height: 60),
             GridView.builder(
               shrinkWrap: true,
@@ -29,12 +35,15 @@ class ProjectsSection extends StatelessWidget {
                 crossAxisCount: columns,
                 crossAxisSpacing: 30,
                 mainAxisSpacing: 30,
-                childAspectRatio: Responsive.isMobile(context) ? 0.85 : 1.1,
+                childAspectRatio: Responsive.isMobile(context) ? 0.75 : 0.95,
               ),
-              itemCount: PortfolioData.projects.length,
+              itemCount: projects.length,
               itemBuilder: (context, index) {
-                final project = PortfolioData.projects[index];
-                return _ProjectCard(project: project);
+                final project = projects[index];
+                return _ProjectCard(
+                  project: project,
+                  languageService: languageService,
+                );
               },
             ),
           ],
@@ -45,20 +54,25 @@ class ProjectsSection extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  final project;
+  final Map<String, dynamic> project;
+  final LanguageService languageService;
 
-  const _ProjectCard({required this.project});
+  const _ProjectCard({
+    required this.project,
+    required this.languageService,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final techStack = (project['techStack'] as List<dynamic>?)?.cast<String>() ?? [];
+
     return AnimatedCard(
       onTap: () => _showProjectDetails(context, project),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Project Image Placeholder
           Container(
-            height: 180,
+            height: 160,
             decoration: BoxDecoration(
               color: AppColors.primaryBg,
               borderRadius: const BorderRadius.only(
@@ -79,7 +93,7 @@ class _ProjectCard extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,7 +104,7 @@ class _ProjectCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      project.category,
+                      project['category'] ?? '',
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.accent,
@@ -98,59 +112,56 @@ class _ProjectCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
                   Text(
-                    project.title,
+                    project['title'] ?? '',
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    project.description,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textSecondary,
-                      height: 1.5,
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: Text(
+                      project['description'] ?? '',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textSecondary,
+                        height: 1.5,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  const Spacer(),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: project.techStack
-                        .take(3)
-                        .map<Widget>((tech) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryBg,
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(color: AppColors.border),
-                              ),
-                              child: Text(
-                                tech,
-                                style: const TextStyle(
-                                  fontSize: 11,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ))
-                        .toList(),
+                    children: techStack.take(3).map<Widget>((tech) => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBg,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: AppColors.border),
+                      ),
+                      child: Text(
+                        tech,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    )).toList(),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
                   Row(
                     children: [
-                      const Text(
-                        'View Details',
-                        style: TextStyle(
+                      Text(
+                        languageService.viewDetailsButton,
+                        style: const TextStyle(
                           fontSize: 14,
                           color: AppColors.accent,
                           fontWeight: FontWeight.w600,
@@ -173,7 +184,10 @@ class _ProjectCard extends StatelessWidget {
     );
   }
 
-  void _showProjectDetails(BuildContext context, project) {
+  void _showProjectDetails(BuildContext context, Map<String, dynamic> project) {
+    final keyFeatures = (project['keyFeatures'] as List<dynamic>?)?.cast<String>() ?? [];
+    final techStack = (project['techStack'] as List<dynamic>?)?.cast<String>() ?? [];
+
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -191,7 +205,7 @@ class _ProjectCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        project.title,
+                        project['title'] ?? '',
                         style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -213,7 +227,7 @@ class _ProjectCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    project.category,
+                    project['category'] ?? '',
                     style: const TextStyle(
                       fontSize: 12,
                       color: AppColors.accent,
@@ -222,9 +236,9 @@ class _ProjectCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Description',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Mô tả' : 'Description',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -232,7 +246,7 @@ class _ProjectCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  project.description,
+                  project['description'] ?? '',
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -240,9 +254,9 @@ class _ProjectCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Role',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Vai trò' : 'Role',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -250,50 +264,50 @@ class _ProjectCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  project.role,
+                  project['role'] ?? '',
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Key Features',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Tính năng chính' : 'Key Features',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 12),
-                ...project.keyFeatures.map((feature) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Icons.check_circle,
-                            size: 16,
-                            color: AppColors.accent,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              feature,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: AppColors.textSecondary,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
-                        ],
+                ...keyFeatures.map((feature) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.check_circle,
+                        size: 16,
+                        color: AppColors.accent,
                       ),
-                    )),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          feature,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
                 const SizedBox(height: 24),
-                const Text(
-                  'Tech Stack',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Công nghệ' : 'Tech Stack',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -303,25 +317,22 @@ class _ProjectCard extends StatelessWidget {
                 Wrap(
                   spacing: 12,
                   runSpacing: 12,
-                  children: project.techStack
-                      .map<Widget>((tech) => Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryBg,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.accent),
-                            ),
-                            child: Text(
-                              tech,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: AppColors.accent,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ))
-                      .toList(),
+                  children: techStack.map<Widget>((tech) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryBg,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.accent),
+                    ),
+                    child: Text(
+                      tech,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.accent,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )).toList(),
                 ),
               ],
             ),

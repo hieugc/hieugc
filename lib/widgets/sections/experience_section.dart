@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
-import '../../data/portfolio_data.dart';
+import '../../services/language_service.dart';
 import '../common/section_title.dart';
 
 class ExperienceSection extends StatelessWidget {
-  const ExperienceSection({super.key});
+  final LanguageService languageService;
+
+  const ExperienceSection({
+    super.key,
+    required this.languageService,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +22,13 @@ class ExperienceSection extends StatelessWidget {
         padding: Responsive.pagePadding(context),
         child: Column(
           children: [
-            const SectionTitle(title: 'Work Experience'),
+            SectionTitle(title: languageService.experienceTitle),
             const SizedBox(height: 60),
-            _WorkExperienceCard(),
+            _WorkExperienceCard(languageService: languageService),
             const SizedBox(height: 80),
-            const SectionTitle(title: 'Education'),
+            SectionTitle(title: languageService.educationTitle),
             const SizedBox(height: 60),
-            _EducationCard(),
+            _EducationCard(languageService: languageService),
           ],
         ),
       ),
@@ -32,9 +37,15 @@ class ExperienceSection extends StatelessWidget {
 }
 
 class _WorkExperienceCard extends StatelessWidget {
+  final LanguageService languageService;
+
+  const _WorkExperienceCard({required this.languageService});
+
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
+    final workExp = languageService.workExperience;
+    final projects = (workExp['projects'] as List<dynamic>?)?.cast<String>() ?? [];
 
     return Container(
       padding: const EdgeInsets.all(32),
@@ -66,7 +77,7 @@ class _WorkExperienceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  PortfolioData.workPosition,
+                  workExp['position'] ?? '',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -75,7 +86,7 @@ class _WorkExperienceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  PortfolioData.workCompany,
+                  workExp['company'] ?? '',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -92,7 +103,7 @@ class _WorkExperienceCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      PortfolioData.workDuration,
+                      workExp['duration'] ?? '',
                       style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.textSecondary,
@@ -102,7 +113,7 @@ class _WorkExperienceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  PortfolioData.workDescription,
+                  workExp['description'] ?? '',
                   style: const TextStyle(
                     fontSize: 15,
                     color: AppColors.textSecondary,
@@ -110,40 +121,38 @@ class _WorkExperienceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Key Projects:',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Dự án chính:' : 'Key Projects:',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 12),
-                ...PortfolioData.workProjects.map(
-                  (project) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.check_circle,
-                          size: 16,
-                          color: AppColors.accent,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            project,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                            ),
+                ...projects.map((project) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.check_circle,
+                        size: 16,
+                        color: AppColors.accent,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          project,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
+                )),
               ],
             ),
           ),
@@ -154,9 +163,15 @@ class _WorkExperienceCard extends StatelessWidget {
 }
 
 class _EducationCard extends StatelessWidget {
+  final LanguageService languageService;
+
+  const _EducationCard({required this.languageService});
+
   @override
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
+    final education = languageService.education;
+    final gradProject = education['graduationProject'] as Map<String, dynamic>?;
 
     return Container(
       padding: const EdgeInsets.all(32),
@@ -188,7 +203,7 @@ class _EducationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  PortfolioData.degree,
+                  education['degree'] ?? '',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -197,7 +212,7 @@ class _EducationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  PortfolioData.universityShort,
+                  education['university'] ?? '',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -205,41 +220,52 @@ class _EducationCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
+                Wrap(
+                  spacing: 20,
+                  runSpacing: 8,
                   children: [
-                    const Icon(
-                      Icons.calendar_today,
-                      size: 16,
-                      color: AppColors.textSecondary,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 16,
+                          color: AppColors.textSecondary,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          education['duration'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      PortfolioData.educationDuration,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    const Icon(
-                      Icons.star,
-                      size: 16,
-                      color: AppColors.accent,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'GPA: ${PortfolioData.gpa}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: AppColors.textSecondary,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          size: 16,
+                          color: AppColors.accent,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'GPA: ${education['gpa'] ?? ''}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Graduation Project:',
-                  style: TextStyle(
+                Text(
+                  languageService.isVietnamese ? 'Đồ án tốt nghiệp:' : 'Graduation Project:',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -247,7 +273,7 @@ class _EducationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${PortfolioData.graduationProject} - ${PortfolioData.graduationProjectDescription}',
+                  '${gradProject?['title'] ?? ''} - ${gradProject?['description'] ?? ''}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
