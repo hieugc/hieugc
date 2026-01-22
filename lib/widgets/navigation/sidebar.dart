@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/colors.dart';
+import '../../config/sizes.dart';
 import '../../services/language_service.dart';
 
 class Sidebar extends StatelessWidget {
@@ -14,8 +15,9 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final sidebarWidth = (screenWidth * 0.30).clamp(280.0, 380.0);
+    final sidebarWidth = AppSizes.sidebarWidth(context);
+    final padding = AppSizes.sidebarPadding(context);
+    final avatarSize = AppSizes.avatarSize(context);
 
     return Container(
       width: sidebarWidth,
@@ -27,20 +29,20 @@ class Sidebar extends StatelessWidget {
         ),
       ),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: padding * 1.5, horizontal: padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Avatar
             Container(
-              width: 120,
-              height: 120,
+              width: avatarSize,
+              height: avatarSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.accent, width: 3),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.accent.withOpacity(0.3),
+                    color: AppColors.accent.withValues(alpha: 0.3),
                     blurRadius: 16,
                     spreadRadius: 2,
                   ),
@@ -51,54 +53,57 @@ class Sidebar extends StatelessWidget {
                   languageService.avatarPath,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
-                    color: AppColors.accent.withOpacity(0.2),
-                    child: const Icon(
+                    color: AppColors.accent.withValues(alpha: 0.2),
+                    child: Icon(
                       Icons.person,
-                      size: 60,
+                      size: avatarSize * 0.5,
                       color: AppColors.accent,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: AppSizes.itemSpacing(context)),
 
             // Name
             Text(
               languageService.name,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 22,
+              style: TextStyle(
+                fontSize: AppSizes.heading4(context),
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: AppSizes.itemSpacingSmall(context)),
 
             // Title
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSizes.cardPaddingSmall(context),
+                vertical: 6,
+              ),
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
+                color: AppColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 languageService.title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: AppSizes.label(context),
                   color: AppColors.accent,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: AppSizes.itemSpacing(context)),
 
             // Social Links
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 12,
-              runSpacing: 12,
+              spacing: AppSizes.itemSpacingSmall(context),
+              runSpacing: AppSizes.itemSpacingSmall(context),
               children: [
                 _SocialButton(
                   icon: FontAwesomeIcons.github,
@@ -118,57 +123,60 @@ class Sidebar extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: AppSizes.cardPadding(context)),
 
             // Divider
             _buildDivider(),
-            const SizedBox(height: 20),
+            SizedBox(height: AppSizes.itemSpacing(context)),
 
             // Contact Info Section
-            _buildSectionTitle(languageService.isVietnamese ? 'Thông tin liên hệ' : 'Contact Info'),
-            const SizedBox(height: 12),
+            _buildSectionTitle(context, languageService.isVietnamese ? 'Thông tin liên hệ' : 'Contact Info'),
+            SizedBox(height: AppSizes.itemSpacingSmall(context)),
             _InfoItem(icon: Icons.email_outlined, text: languageService.email),
-            const SizedBox(height: 8),
+            SizedBox(height: AppSizes.itemSpacingSmall(context)),
             _InfoItem(icon: Icons.phone_outlined, text: languageService.phone),
-            const SizedBox(height: 8),
+            SizedBox(height: AppSizes.itemSpacingSmall(context)),
             _InfoItem(icon: Icons.cake_outlined, text: languageService.birthday),
-            const SizedBox(height: 24),
+            SizedBox(height: AppSizes.cardPadding(context)),
 
             // Divider
             _buildDivider(),
-            const SizedBox(height: 20),
+            SizedBox(height: AppSizes.itemSpacing(context)),
 
             // Skills Section
-            _buildSectionTitle(languageService.skillsTitle),
-            const SizedBox(height: 16),
-            _buildSkillsSection(languageService),
-            const SizedBox(height: 24),
+            _buildSectionTitle(context, languageService.skillsTitle),
+            SizedBox(height: AppSizes.itemSpacing(context)),
+            _buildSkillsSection(context, languageService),
+            SizedBox(height: AppSizes.cardPadding(context)),
 
             // Download Resume Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () => _downloadResume(languageService.resumePath),
-                icon: const Icon(Icons.download, size: 18),
-                label: Text(languageService.downloadResumeButton),
+                icon: Icon(Icons.download, size: AppSizes.iconSmall(context)),
+                label: Text(
+                  languageService.downloadResumeButton,
+                  style: TextStyle(fontSize: AppSizes.bodySmall(context)),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.accent,
                   foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: EdgeInsets.symmetric(vertical: AppSizes.cardPaddingSmall(context)),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium(context)),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: AppSizes.cardPadding(context)),
 
             // Copyright
             Text(
               '© ${DateTime.now().year} ${languageService.name}',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 11,
+              style: TextStyle(
+                fontSize: AppSizes.caption(context),
                 color: AppColors.textSecondary,
               ),
             ),
@@ -185,13 +193,13 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String title) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 14,
+        style: TextStyle(
+          fontSize: AppSizes.bodySmall(context),
           fontWeight: FontWeight.bold,
           color: AppColors.textPrimary,
           letterSpacing: 0.5,
@@ -200,7 +208,7 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillsSection(LanguageService langService) {
+  Widget _buildSkillsSection(BuildContext context, LanguageService langService) {
     final skills = langService.skills;
 
     return Column(
@@ -235,7 +243,7 @@ class _SkillCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: AppSizes.itemSpacing(context)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -249,12 +257,12 @@ class _SkillCategory extends StatelessWidget {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: AppSizes.itemSpacingSmall(context)),
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 13,
+                  style: TextStyle(
+                    fontSize: AppSizes.label(context),
                     fontWeight: FontWeight.w600,
                     color: AppColors.accent,
                   ),
@@ -262,7 +270,7 @@ class _SkillCategory extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: AppSizes.itemSpacingSmall(context)),
           Wrap(
             spacing: 6,
             runSpacing: 6,
@@ -282,16 +290,19 @@ class _SkillTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSizes.itemSpacingSmall(context),
+        vertical: 4,
+      ),
       decoration: BoxDecoration(
         color: AppColors.primaryBg,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(AppSizes.borderRadiusSmall(context)),
         border: Border.all(color: AppColors.border),
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 11,
+        style: TextStyle(
+          fontSize: AppSizes.caption(context),
           color: AppColors.textSecondary,
         ),
       ),
@@ -317,6 +328,9 @@ class _SocialButtonState extends State<_SocialButton> {
 
   @override
   Widget build(BuildContext context) {
+    final buttonSize = AppSizes.socialButtonSize(context);
+    final iconSize = AppSizes.socialIconSize(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -329,17 +343,19 @@ class _SocialButtonState extends State<_SocialButton> {
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(10),
+          width: buttonSize,
+          height: buttonSize,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             color: _isHovered ? AppColors.accent : AppColors.primaryBg,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium(context)),
             border: Border.all(
               color: _isHovered ? AppColors.accent : AppColors.border,
             ),
           ),
           child: FaIcon(
             widget.icon,
-            size: 18,
+            size: iconSize,
             color: _isHovered ? Colors.black : AppColors.textPrimary,
           ),
         ),
@@ -363,15 +379,15 @@ class _InfoItem extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 16,
+          size: AppSizes.iconSmall(context),
           color: AppColors.accent,
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: AppSizes.itemSpacingSmall(context)),
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 13,
+            style: TextStyle(
+              fontSize: AppSizes.label(context),
               color: AppColors.textSecondary,
             ),
           ),

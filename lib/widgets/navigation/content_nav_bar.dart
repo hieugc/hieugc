@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
+import '../../config/sizes.dart';
 import '../../services/language_service.dart';
 import '../common/language_toggle.dart';
 
@@ -45,18 +46,19 @@ class _ContentNavBarState extends State<ContentNavBar> {
   @override
   Widget build(BuildContext context) {
     final lang = widget.languageService;
+    final navPadding = AppSizes.navbarPaddingHorizontal(context);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: navPadding, vertical: 12),
       decoration: BoxDecoration(
         color: _isScrolled
-            ? AppColors.cardBg.withOpacity(0.95)
+            ? AppColors.cardBg.withValues(alpha: 0.95)
             : AppColors.primaryBg,
         boxShadow: _isScrolled
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -91,7 +93,7 @@ class _ContentNavBarState extends State<ContentNavBar> {
               text: lang.navContact,
               onTap: () => widget.onMenuTap(5),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: AppSizes.itemSpacing(context)),
             LanguageToggle(languageService: widget.languageService),
           ],
         ),
@@ -118,17 +120,23 @@ class _NavItemState extends State<_NavItem> {
 
   @override
   Widget build(BuildContext context) {
+    final fontSize = AppSizes.navItem(context);
+    final borderRadius = AppSizes.borderRadiusMedium(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: widget.onTap,
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: AppSizes.itemSpacingSmall(context) / 2),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSizes.cardPaddingSmall(context),
+            vertical: 10,
+          ),
           decoration: BoxDecoration(
-            color: _isHovered ? AppColors.accent.withOpacity(0.1) : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            color: _isHovered ? AppColors.accent.withValues(alpha: 0.1) : Colors.transparent,
+            borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
               color: _isHovered ? AppColors.accent : Colors.transparent,
               width: 1,
@@ -137,7 +145,7 @@ class _NavItemState extends State<_NavItem> {
           child: Text(
             widget.text,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: fontSize,
               fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
               color: _isHovered ? AppColors.accent : AppColors.textPrimary,
             ),
