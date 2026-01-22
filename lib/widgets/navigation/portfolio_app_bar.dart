@@ -131,19 +131,13 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
                 ],
               )
             else
-              Row(
-                children: [
-                  LanguageToggle(languageService: widget.languageService),
-                  const SizedBox(width: 8),
-                  // Mobile Menu Button
-                  IconButton(
-                    icon: const Icon(Icons.menu),
-                    color: AppColors.textPrimary,
-                    onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
-                    },
-                  ),
-                ],
+              // Mobile Menu Button only (LanguageToggle is in MobileDrawer)
+              IconButton(
+                icon: const Icon(Icons.menu),
+                color: AppColors.textPrimary,
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
               ),
           ],
         ),
