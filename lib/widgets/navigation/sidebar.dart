@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/colors.dart';
 import '../../services/language_service.dart';
-import '../common/language_toggle.dart';
 
 class Sidebar extends StatelessWidget {
   final LanguageService languageService;
@@ -32,13 +31,6 @@ class Sidebar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Language Toggle
-            Align(
-              alignment: Alignment.topRight,
-              child: LanguageToggle(languageService: languageService),
-            ),
-            const SizedBox(height: 16),
-
             // Avatar
             Container(
               width: 120,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../services/language_service.dart';
+import '../common/language_toggle.dart';
 
 class ContentNavBar extends StatefulWidget {
   final ScrollController scrollController;
@@ -90,6 +91,8 @@ class _ContentNavBarState extends State<ContentNavBar> {
               text: lang.navContact,
               onTap: () => widget.onMenuTap(5),
             ),
+            const SizedBox(width: 16),
+            LanguageToggle(languageService: widget.languageService),
           ],
         ),
       ),
