@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
 import '../../services/language_service.dart';
@@ -334,6 +335,27 @@ class _ProjectCard extends StatelessWidget {
                     ),
                   )).toList(),
                 ),
+                if (project['url'] != null && (project['url'] as String).isNotEmpty) ...[
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      final uri = Uri.parse(project['url']);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                    icon: const Icon(Icons.open_in_new, size: 18),
+                    label: Text(languageService.isVietnamese ? 'Truy cập website' : 'Visit Website'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

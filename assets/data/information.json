@@ -69,6 +69,7 @@
         "description": "Hệ thống cho phép phóng viên đặt câu hỏi gửi đến Trung tâm Báo chí và chuyển giao cho các đơn vị ban ngành trả lời",
         "techStack": [".NET Core MVC", "ASP.NET API", "C#", "SQL Server", "Entity Framework", "LINQ", "jQuery", "Bootstrap"],
         "role": "Fullstack Developer",
+        "url": "https://tiepnhan.ttbc-hcm.gov.vn/",
         "keyFeatures": [
           "Tham gia phân tích nghiệp vụ doanh nghiệp, thiết kế kiến trúc ứng dụng web theo mô hình MVC / Client–Server",
           "Thiết kế cơ sở dữ liệu SQL Server, sử dụng hiệu quả DDL, DML, tối ưu truy vấn phục vụ báo cáo và tra cứu",
@@ -274,6 +275,7 @@
         "description": "System allowing journalists to submit questions to the Press Center and transfer them to relevant departments for responses",
         "techStack": [".NET Core MVC", "ASP.NET API", "C#", "SQL Server", "Entity Framework", "LINQ", "jQuery", "Bootstrap"],
         "role": "Fullstack Developer",
+        "url": "https://tiepnhan.ttbc-hcm.gov.vn/",
         "keyFeatures": [
           "Participated in business analysis, designed web application architecture following MVC / Client-Server pattern",
           "Designed SQL Server database, efficiently used DDL, DML, optimized queries for reporting and lookup",
