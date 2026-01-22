@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../services/language_service.dart';
+import '../common/language_toggle.dart';
 
 class MobileDrawer extends StatelessWidget {
   final Function(int) onMenuTap;
@@ -65,6 +66,7 @@ class MobileDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  LanguageToggle(languageService: languageService),
                 ],
               ),
             ),

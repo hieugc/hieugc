@@ -3,7 +3,6 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import '../config/colors.dart';
 import '../config/responsive.dart';
 import '../services/language_service.dart';
-import '../widgets/common/language_toggle.dart';
 import '../widgets/navigation/portfolio_app_bar.dart';
 import '../widgets/navigation/mobile_drawer.dart';
 import '../widgets/navigation/sidebar.dart';
@@ -201,24 +200,18 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               top: 20,
               right: 20,
-              child: Row(
-                children: [
-                  LanguageToggle(languageService: langService),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.cardBg.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.menu),
-                      color: AppColors.textPrimary,
-                      onPressed: () {
-                        _scaffoldKey.currentState?.openEndDrawer();
-                      },
-                    ),
-                  ),
-                ],
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.cardBg.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.menu),
+                  color: AppColors.textPrimary,
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openEndDrawer();
+                  },
+                ),
               ),
             ),
         ],
