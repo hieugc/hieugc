@@ -7,6 +7,7 @@ import '../widgets/common/language_toggle.dart';
 import '../widgets/navigation/portfolio_app_bar.dart';
 import '../widgets/navigation/mobile_drawer.dart';
 import '../widgets/navigation/sidebar.dart';
+import '../widgets/navigation/content_nav_bar.dart';
 import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/statistics_section.dart';
 import '../widgets/sections/services_section.dart';
@@ -233,7 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
           // Fixed Sidebar
           Sidebar(
             languageService: langService,
-            onMenuTap: _scrollToSection,
           ),
 
           // Scrollable Main Content
@@ -242,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ListView(
                   controller: _scrollController,
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(top: 80),
                   children: [
                     // Summary Section (Index 0)
                     AutoScrollTag(
@@ -279,29 +279,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     const SizedBox(height: 60),
 
-                    // Skills Section (Index 3)
+                    // Education Section (Index 3) - shares section with Experience
                     AutoScrollTag(
                       key: const ValueKey(3),
                       controller: _scrollController,
                       index: 3,
-                      child: SkillsSection(languageService: langService),
+                      child: const SizedBox.shrink(),
                     ),
 
-                    const SizedBox(height: 60),
-
-                    // Services Section
-                    ServicesSection(languageService: langService),
-
-                    const SizedBox(height: 60),
-
-                    // Footer/Contact Section (Index 4)
+                    // Services Section (Index 4)
                     AutoScrollTag(
                       key: const ValueKey(4),
                       controller: _scrollController,
                       index: 4,
+                      child: ServicesSection(languageService: langService),
+                    ),
+
+                    const SizedBox(height: 60),
+
+                    // Footer/Contact Section (Index 5)
+                    AutoScrollTag(
+                      key: const ValueKey(5),
+                      controller: _scrollController,
+                      index: 5,
                       child: _DesktopFooter(languageService: langService),
                     ),
                   ],
+                ),
+
+                // Sticky Navigation Bar
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: ContentNavBar(
+                    scrollController: _scrollController,
+                    onMenuTap: _scrollToSection,
+                    languageService: langService,
+                  ),
                 ),
 
                 // Back to Top Button

@@ -7,47 +7,49 @@ import '../common/language_toggle.dart';
 
 class Sidebar extends StatelessWidget {
   final LanguageService languageService;
-  final Function(int) onMenuTap;
 
   const Sidebar({
     super.key,
     required this.languageService,
-    required this.onMenuTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final sidebarWidth = (screenWidth * 0.30).clamp(280.0, 380.0);
+
     return Container(
-      width: 320,
+      width: sidebarWidth,
       height: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.cardBg,
         border: Border(
           right: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Language Toggle
             Align(
               alignment: Alignment.topRight,
               child: LanguageToggle(languageService: languageService),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             // Avatar
             Container(
-              width: 150,
-              height: 150,
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.accent, width: 4),
+                border: Border.all(color: AppColors.accent, width: 3),
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.accent.withOpacity(0.3),
-                    blurRadius: 20,
+                    blurRadius: 16,
                     spreadRadius: 2,
                   ),
                 ],
@@ -60,21 +62,21 @@ class Sidebar extends StatelessWidget {
                     color: AppColors.accent.withOpacity(0.2),
                     child: const Icon(
                       Icons.person,
-                      size: 80,
+                      size: 60,
                       color: AppColors.accent,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
             // Name
             Text(
               languageService.name,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
@@ -83,7 +85,7 @@ class Sidebar extends StatelessWidget {
 
             // Title
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
                 color: AppColors.accent.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
@@ -92,13 +94,13 @@ class Sidebar extends StatelessWidget {
                 languageService.title,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   color: AppColors.accent,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
             // Social Links
             Row(
@@ -108,73 +110,38 @@ class Sidebar extends StatelessWidget {
                   icon: FontAwesomeIcons.github,
                   url: languageService.github,
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 12),
                 _SocialButton(
                   icon: FontAwesomeIcons.envelope,
                   url: 'mailto:${languageService.email}',
                 ),
               ],
             ),
-            const SizedBox(height: 32),
-
-            // Divider
-            Container(
-              height: 1,
-              color: AppColors.divider,
-            ),
             const SizedBox(height: 24),
 
-            // Contact Info
-            _InfoItem(
-              icon: Icons.email_outlined,
-              text: languageService.email,
-            ),
-            const SizedBox(height: 12),
-            _InfoItem(
-              icon: Icons.phone_outlined,
-              text: languageService.phone,
-            ),
-            const SizedBox(height: 12),
-            _InfoItem(
-              icon: Icons.cake_outlined,
-              text: languageService.birthday,
-            ),
-            const SizedBox(height: 32),
-
             // Divider
-            Container(
-              height: 1,
-              color: AppColors.divider,
-            ),
+            _buildDivider(),
+            const SizedBox(height: 20),
+
+            // Contact Info Section
+            _buildSectionTitle(languageService.isVietnamese ? 'Thông tin liên hệ' : 'Contact Info'),
+            const SizedBox(height: 12),
+            _InfoItem(icon: Icons.email_outlined, text: languageService.email),
+            const SizedBox(height: 8),
+            _InfoItem(icon: Icons.phone_outlined, text: languageService.phone),
+            const SizedBox(height: 8),
+            _InfoItem(icon: Icons.cake_outlined, text: languageService.birthday),
             const SizedBox(height: 24),
 
-            // Navigation Menu
-            _NavMenuItem(
-              icon: Icons.home_outlined,
-              text: languageService.navHome,
-              onTap: () => onMenuTap(0),
-            ),
-            _NavMenuItem(
-              icon: Icons.folder_outlined,
-              text: languageService.navPortfolio,
-              onTap: () => onMenuTap(1),
-            ),
-            _NavMenuItem(
-              icon: Icons.work_outline,
-              text: languageService.navExperience,
-              onTap: () => onMenuTap(2),
-            ),
-            _NavMenuItem(
-              icon: Icons.build_outlined,
-              text: languageService.skillsTitle,
-              onTap: () => onMenuTap(3),
-            ),
-            _NavMenuItem(
-              icon: Icons.mail_outline,
-              text: languageService.navContact,
-              onTap: () => onMenuTap(4),
-            ),
-            const SizedBox(height: 32),
+            // Divider
+            _buildDivider(),
+            const SizedBox(height: 20),
+
+            // Skills Section
+            _buildSectionTitle(languageService.skillsTitle),
+            const SizedBox(height: 16),
+            _buildSkillsSection(languageService),
+            const SizedBox(height: 24),
 
             // Download Resume Button
             SizedBox(
@@ -186,20 +153,21 @@ class Sidebar extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.accent,
                   foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 24),
 
             // Copyright
             Text(
-              '© ${DateTime.now().year}',
+              '© ${DateTime.now().year} ${languageService.name}',
+              textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 color: AppColors.textSecondary,
               ),
             ),
@@ -209,11 +177,124 @@ class Sidebar extends StatelessWidget {
     );
   }
 
+  Widget _buildDivider() {
+    return Container(
+      height: 1,
+      color: AppColors.divider,
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary,
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkillsSection(LanguageService langService) {
+    final skills = langService.skills;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: skills.entries.map((entry) {
+        final categoryData = entry.value as Map<String, dynamic>;
+        final title = categoryData['title'] as String? ?? '';
+        final items = (categoryData['items'] as List<dynamic>?)?.cast<String>() ?? [];
+
+        return _SkillCategory(title: title, items: items);
+      }).toList(),
+    );
+  }
+
   Future<void> _downloadResume(String resumePath) async {
     final uri = Uri.parse(resumePath);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     }
+  }
+}
+
+class _SkillCategory extends StatelessWidget {
+  final String title;
+  final List<String> items;
+
+  const _SkillCategory({
+    required this.title,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 3,
+                height: 14,
+                decoration: BoxDecoration(
+                  color: AppColors.accent,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.accent,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: items.map((item) => _SkillTag(text: item)).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SkillTag extends StatelessWidget {
+  final String text;
+
+  const _SkillTag({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppColors.primaryBg,
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 11,
+          color: AppColors.textSecondary,
+        ),
+      ),
+    );
   }
 }
 
@@ -247,7 +328,7 @@ class _SocialButtonState extends State<_SocialButton> {
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: _isHovered ? AppColors.accent : AppColors.primaryBg,
             borderRadius: BorderRadius.circular(8),
@@ -257,7 +338,7 @@ class _SocialButtonState extends State<_SocialButton> {
           ),
           child: FaIcon(
             widget.icon,
-            size: 20,
+            size: 18,
             color: _isHovered ? Colors.black : AppColors.textPrimary,
           ),
         ),
@@ -281,77 +362,20 @@ class _InfoItem extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 18,
+          size: 16,
           color: AppColors.accent,
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 10),
         Expanded(
           child: Text(
             text,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               color: AppColors.textSecondary,
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _NavMenuItem extends StatefulWidget {
-  final IconData icon;
-  final String text;
-  final VoidCallback onTap;
-
-  const _NavMenuItem({
-    required this.icon,
-    required this.text,
-    required this.onTap,
-  });
-
-  @override
-  State<_NavMenuItem> createState() => _NavMenuItemState();
-}
-
-class _NavMenuItemState extends State<_NavMenuItem> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          margin: const EdgeInsets.only(bottom: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: _isHovered ? AppColors.accent.withOpacity(0.1) : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                widget.icon,
-                size: 20,
-                color: _isHovered ? AppColors.accent : AppColors.textSecondary,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                widget.text,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
-                  color: _isHovered ? AppColors.accent : AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
