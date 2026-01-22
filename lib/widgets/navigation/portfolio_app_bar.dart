@@ -47,6 +47,11 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
   Widget build(BuildContext context) {
     final isMobile = Responsive.isMobile(context);
 
+    // Hide navigation on mobile when at top
+    if (isMobile && !_isScrolled) {
+      return const SizedBox.shrink();
+    }
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
