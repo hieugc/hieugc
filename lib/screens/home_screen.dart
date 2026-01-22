@@ -127,27 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 80),
 
-              // Services Section
-              ServicesSection(languageService: langService),
-
-              const SizedBox(height: 80),
-
               // Projects Section (Index 1)
               AutoScrollTag(
                 key: const ValueKey(1),
                 controller: _scrollController,
                 index: 1,
                 child: ProjectsSection(languageService: langService),
-              ),
-
-              const SizedBox(height: 80),
-
-              // Skills Section (Index 3)
-              AutoScrollTag(
-                key: const ValueKey(3),
-                controller: _scrollController,
-                index: 3,
-                child: SkillsSection(languageService: langService),
               ),
 
               const SizedBox(height: 80),
@@ -162,11 +147,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 80),
 
-              // Footer/Contact Section (Index 4)
+              // Skills Section (Index 3) - Mobile only since desktop has it in sidebar
+              AutoScrollTag(
+                key: const ValueKey(3),
+                controller: _scrollController,
+                index: 3,
+                child: SkillsSection(languageService: langService),
+              ),
+
+              const SizedBox(height: 80),
+
+              // Services Section (Index 4)
               AutoScrollTag(
                 key: const ValueKey(4),
                 controller: _scrollController,
                 index: 4,
+                child: ServicesSection(languageService: langService),
+              ),
+
+              const SizedBox(height: 80),
+
+              // Footer/Contact Section (Index 5)
+              AutoScrollTag(
+                key: const ValueKey(5),
+                controller: _scrollController,
+                index: 5,
                 child: FooterSection(languageService: langService),
               ),
             ],

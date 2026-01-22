@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/colors.dart';
 import '../../config/responsive.dart';
+import '../../config/sizes.dart';
 import '../../services/language_service.dart';
 
 class StatisticsSection extends StatelessWidget {
@@ -25,9 +26,9 @@ class StatisticsSection extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: columns,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-          childAspectRatio: isMobile ? 1.5 : 1.8,
+          crossAxisSpacing: isMobile ? 12 : 20,
+          mainAxisSpacing: isMobile ? 12 : 20,
+          childAspectRatio: isMobile ? 1.2 : 1.8,
         ),
         itemCount: stats.length,
         itemBuilder: (context, index) {
@@ -60,6 +61,11 @@ class _StatCardState extends State<_StatCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Responsive.isMobile(context);
+    final valueSize = AppSizes.heading3(context);
+    final labelSize = AppSizes.label(context);
+    final padding = AppSizes.cardPaddingSmall(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -68,7 +74,7 @@ class _StatCardState extends State<_StatCard> {
         transform: Matrix4.translationValues(0, _isHovered ? -8 : 0, 0),
         decoration: BoxDecoration(
           color: AppColors.cardBg,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium(context)),
           border: Border.all(
             color: _isHovered ? AppColors.accent : AppColors.border,
             width: _isHovered ? 2 : 1,
@@ -76,32 +82,37 @@ class _StatCardState extends State<_StatCard> {
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: AppColors.accent.withOpacity(0.2),
+                    color: AppColors.accent.withValues(alpha: 0.2),
                     blurRadius: 20,
                     spreadRadius: 2,
                   ),
                 ]
               : null,
         ),
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              widget.value,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: _isHovered ? AppColors.accent : AppColors.textPrimary,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                widget.value,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: valueSize,
+                  fontWeight: FontWeight.bold,
+                  color: _isHovered ? AppColors.accent : AppColors.textPrimary,
+                ),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: isMobile ? 4 : 8),
             Text(
               widget.label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: labelSize,
                 color: AppColors.textSecondary,
               ),
             ),
