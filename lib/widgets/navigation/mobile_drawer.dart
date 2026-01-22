@@ -66,7 +66,6 @@ class MobileDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  LanguageToggle(languageService: languageService),
                 ],
               ),
             ),
@@ -116,6 +115,16 @@ class MobileDrawer extends StatelessWidget {
                       onMenuTap(4);
                     },
                   ),
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        LanguageToggle(languageService: languageService),
+                      ],
+                    )
+                  ),
                 ],
               ),
             ),
@@ -123,6 +132,7 @@ class MobileDrawer extends StatelessWidget {
             // Footer
             Container(
               padding: const EdgeInsets.all(24),
+              width: double.infinity,
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(color: AppColors.divider, width: 1),

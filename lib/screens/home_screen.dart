@@ -78,9 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final isMobile = Responsive.isMobile(context);
 
     if (langService.isLoading) {
-      return Scaffold(
+      return const Scaffold(
         backgroundColor: AppColors.primaryBg,
-        body: const Center(
+        body: Center(
           child: CircularProgressIndicator(color: AppColors.accent),
         ),
       );
@@ -419,14 +419,14 @@ class _DesktopFooter extends StatelessWidget {
               color: AppColors.accent,
             ),
           ),
-          const SizedBox(height: 24),
-          Text(
-            '© ${DateTime.now().year} ${languageService.name}. All rights reserved.',
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-            ),
-          ),
+          // const SizedBox(height: 24),
+          // Text(
+          //   '© ${DateTime.now().year} ${languageService.name}. All rights reserved.',
+          //   style: const TextStyle(
+          //     fontSize: 12,
+          //     color: AppColors.textSecondary,
+          //   ),
+          // ),
         ],
       ),
     );
