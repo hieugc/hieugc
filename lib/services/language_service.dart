@@ -57,6 +57,8 @@ class LanguageService extends ChangeNotifier {
   String get phone => data?['personal']?['phone'] ?? '';
   String get birthday => data?['personal']?['birthday'] ?? '';
   String get github => data?['personal']?['github'] ?? '';
+  String get facebook => data?['personal']?['facebook'] ?? '';
+  String get linkedin => data?['personal']?['linkedin'] ?? '';
   String get avatarPath => data?['personal']?['avatarPath'] ?? '';
   String get resumePath => data?['personal']?['resumePath'] ?? '';
 

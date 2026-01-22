@@ -95,14 +95,23 @@ class Sidebar extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Social Links
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 12,
+              runSpacing: 12,
               children: [
                 _SocialButton(
                   icon: FontAwesomeIcons.github,
                   url: languageService.github,
                 ),
-                const SizedBox(width: 12),
+                _SocialButton(
+                  icon: FontAwesomeIcons.linkedin,
+                  url: languageService.linkedin,
+                ),
+                _SocialButton(
+                  icon: FontAwesomeIcons.facebook,
+                  url: languageService.facebook,
+                ),
                 _SocialButton(
                   icon: FontAwesomeIcons.envelope,
                   url: 'mailto:${languageService.email}',

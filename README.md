@@ -14,13 +14,13 @@
 
 ## Skills
 
-| Category | Technologies |
-|----------|-------------|
-| **Backend** | .NET Core, ASP.NET MVC, EF Core, REST API, LINQ |
-| **Frontend** | HTML5/CSS3, JavaScript, jQuery, Bootstrap |
-| **Database** | SQL Server, MySQL (Design + Optimization) |
-| **Tooling** | GitLab, IIS, Postman |
-| **Others** | Flutter, Claude AI support |
+| Category      | Technologies                                    |
+|---------------|-------------------------------------------------|
+| **Backend**   | .NET Core, ASP.NET MVC, EF Core, REST API, LINQ |
+| **Frontend**  | HTML5/CSS3, JavaScript, jQuery, Bootstrap       |
+| **Database**  | SQL Server, MySQL (Design + Optimization)       |
+| **Tooling**   | GitLab, IIS, Postman                            |
+| **Others**    | Flutter, Claude AI support                      |
 
 ## Experience
 
