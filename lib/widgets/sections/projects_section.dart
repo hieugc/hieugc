@@ -16,8 +16,9 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final columns = Responsive.gridColumns(context, mobile: 1, tablet: 2, desktop: 2);
+    final columns = Responsive.gridColumns(context, mobile: 1, tablet: 2, desktop: 3);
     final projects = languageService.projects;
+    final aspectRatio = Responsive.isMobile(context) ? 0.75 : (Responsive.isDesktop(context) ? 0.8 : 0.95);
 
     return Container(
       color: AppColors.cardBg.withOpacity(0.3),
@@ -34,9 +35,9 @@ class ProjectsSection extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: columns,
-                crossAxisSpacing: 30,
-                mainAxisSpacing: 30,
-                childAspectRatio: Responsive.isMobile(context) ? 0.75 : 0.95,
+                crossAxisSpacing: 24,
+                mainAxisSpacing: 24,
+                childAspectRatio: aspectRatio,
               ),
               itemCount: projects.length,
               itemBuilder: (context, index) {
