@@ -56,12 +56,12 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
         color: _isScrolled
-            ? AppColors.cardBg.withOpacity(0.95)
+            ? AppColors.cardBg.withValues(alpha: 0.95)
             : Colors.transparent,
         boxShadow: _isScrolled
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -111,11 +111,11 @@ class _PortfolioAppBarState extends State<PortfolioAppBar> {
                     onTap: () => widget.onMenuTap(0),
                   ),
                   _NavItem(
-                    text: widget.languageService.navPortfolio,
+                    text: widget.languageService.navExperience,
                     onTap: () => widget.onMenuTap(1),
                   ),
                   _NavItem(
-                    text: widget.languageService.navExperience,
+                    text: widget.languageService.navPortfolio,
                     onTap: () => widget.onMenuTap(2),
                   ),
                   _NavItem(

@@ -28,7 +28,7 @@ class LanguageService extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     } catch (e) {
-      print('Error loading language data: $e');
+      debugPrint('Error loading language data: $e');
       _isLoading = false;
       notifyListeners();
     }

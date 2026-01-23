@@ -42,7 +42,7 @@ class _SocialIconButtonState extends State<SocialIconButton> {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: _isHovered
-                ? (widget.color ?? AppColors.accent).withOpacity(0.1)
+                ? (widget.color ?? AppColors.accent).withValues(alpha: 0.1)
                 : Colors.transparent,
             border: Border.all(
               color: _isHovered

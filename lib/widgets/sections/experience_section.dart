@@ -15,7 +15,7 @@ class ExperienceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.cardBg.withOpacity(0.3),
+      color: AppColors.cardBg.withValues(alpha: 0.3),
       padding: Responsive.sectionPadding(context),
       child: Container(
         constraints: Responsive.contentConstraints(),
@@ -61,7 +61,7 @@ class _WorkExperienceCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
+                color: AppColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
@@ -187,7 +187,7 @@ class _EducationCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
+                color: AppColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(

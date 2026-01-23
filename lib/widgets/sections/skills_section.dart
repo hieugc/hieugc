@@ -109,7 +109,7 @@ class _SkillChipState extends State<_SkillChip> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
           color: _isHovered
-              ? AppColors.accent.withOpacity(0.1)
+              ? AppColors.accent.withValues(alpha: 0.1)
               : AppColors.cardBg,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(

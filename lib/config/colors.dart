@@ -26,5 +26,6 @@ class AppColors {
   // Social Media Colors
   static const Color github = Color(0xFF333333);
   static const Color linkedin = Color(0xFF0077B5);
+  static const Color facebook = Color(0xFF1877F2);
   static const Color email = Color(0xFFEA4335);
 }

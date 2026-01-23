@@ -48,7 +48,7 @@ class _CustomButtonState extends State<CustomButton> {
               borderRadius: BorderRadius.circular(8),
             ),
             elevation: _isHovered ? 8 : 0,
-            shadowColor: AppColors.accent.withOpacity(0.5),
+            shadowColor: AppColors.accent.withValues(alpha: 0.5),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

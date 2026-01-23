@@ -69,7 +69,7 @@ class _LanguageButtonState extends State<_LanguageButton> {
             color: widget.isSelected
                 ? AppColors.accent
                 : _isHovered
-                    ? AppColors.accent.withOpacity(0.2)
+                    ? AppColors.accent.withValues(alpha: 0.2)
                     : Colors.transparent,
             borderRadius: BorderRadius.circular(20),
           ),

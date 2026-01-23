@@ -48,8 +48,18 @@ class FooterSection extends StatelessWidget {
                   color: AppColors.github,
                 ),
                 SocialIconButton(
+                  icon: FontAwesomeIcons.linkedin,
+                  url: languageService.linkedin,
+                  color: AppColors.linkedin,
+                ),
+                SocialIconButton(
+                  icon: FontAwesomeIcons.facebook,
+                  url: languageService.facebook,
+                  color: AppColors.facebook,
+                ),
+                SocialIconButton(
                   icon: FontAwesomeIcons.envelope,
-                  url: languageService.socialLinks['email']!,
+                  url: 'mailto:${languageService.email}',
                   color: AppColors.email,
                 ),
               ],
@@ -83,15 +93,6 @@ class FooterSection extends StatelessWidget {
                     languageService.email,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '© ${DateTime.now().year} ${languageService.name}. All rights reserved.',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 12,
                       color: AppColors.textSecondary,
                     ),
                   ),

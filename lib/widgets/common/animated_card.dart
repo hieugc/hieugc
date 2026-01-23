@@ -33,8 +33,8 @@ class _AnimatedCardState extends State<AnimatedCard> {
           child: Card(
             elevation: _isHovered ? 16 : widget.elevation,
             shadowColor: _isHovered
-                ? AppColors.accent.withOpacity(0.3)
-                : Colors.black.withOpacity(0.1),
+                ? AppColors.accent.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.1),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(

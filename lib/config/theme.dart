@@ -14,12 +14,10 @@ class AppTheme {
         primary: AppColors.accent,
         secondary: AppColors.accentHover,
         surface: AppColors.cardBg,
-        background: AppColors.primaryBg,
         error: AppColors.error,
         onPrimary: AppColors.textPrimary,
         onSecondary: AppColors.textPrimary,
         onSurface: AppColors.textPrimary,
-        onBackground: AppColors.textPrimary,
         onError: AppColors.textPrimary,
       ),
 

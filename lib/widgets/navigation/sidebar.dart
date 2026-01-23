@@ -169,17 +169,6 @@ class Sidebar extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: AppSizes.cardPadding(context)),
-
-            // Copyright
-            Text(
-              '© ${DateTime.now().year} ${languageService.name}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: AppSizes.caption(context),
-                color: AppColors.textSecondary,
-              ),
-            ),
           ],
         ),
       ),

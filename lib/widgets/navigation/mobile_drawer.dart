@@ -84,16 +84,16 @@ class MobileDrawer extends StatelessWidget {
                     },
                   ),
                   _DrawerItem(
-                    icon: Icons.folder_outlined,
-                    text: languageService.navPortfolio,
+                    icon: Icons.work_outline,
+                    text: languageService.navExperience,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(1);
                     },
                   ),
                   _DrawerItem(
-                    icon: Icons.work_outline,
-                    text: languageService.navExperience,
+                    icon: Icons.folder_outlined,
+                    text: languageService.navPortfolio,
                     onTap: () {
                       Navigator.pop(context);
                       onMenuTap(2);
@@ -190,7 +190,7 @@ class _DrawerItem extends StatelessWidget {
         ),
       ),
       onTap: onTap,
-      hoverColor: AppColors.accent.withOpacity(0.1),
+      hoverColor: AppColors.accent.withValues(alpha: 0.1),
     );
   }
 }

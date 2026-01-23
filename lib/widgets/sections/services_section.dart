@@ -62,7 +62,7 @@ class _ServiceCard extends StatelessWidget {
       case 2:
         return FontAwesomeIcons.layerGroup;
       default:
-        return FontAwesomeIcons.cogs;
+        return FontAwesomeIcons.gears;
     }
   }
 
@@ -79,7 +79,7 @@ class _ServiceCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
+                color: AppColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: FaIcon(

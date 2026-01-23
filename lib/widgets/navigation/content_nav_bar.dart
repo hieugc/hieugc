@@ -74,11 +74,11 @@ class _ContentNavBarState extends State<ContentNavBar> {
               onTap: () => widget.onMenuTap(0),
             ),
             _NavItem(
-              text: lang.projectsTitle,
+              text: lang.experienceTitle,
               onTap: () => widget.onMenuTap(1),
             ),
             _NavItem(
-              text: lang.experienceTitle,
+              text: lang.projectsTitle,
               onTap: () => widget.onMenuTap(2),
             ),
             _NavItem(

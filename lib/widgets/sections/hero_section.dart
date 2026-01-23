@@ -74,7 +74,7 @@ class HeroSection extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.accent.withOpacity(0.3),
+            color: AppColors.accent.withValues(alpha: 0.3),
             blurRadius: 30,
             spreadRadius: 5,
           ),
@@ -108,7 +108,7 @@ class HeroSection extends StatelessWidget {
           isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Text(
-          languageService.isVietnamese ? "Tôi là" : "I'm",
+          languageService.isVietnamese ? 'Tôi là' : "I'm",
           textAlign: isMobile ? TextAlign.center : TextAlign.start,
           style: TextStyle(
             fontSize: isMobile ? 24 : 32,
@@ -189,6 +189,16 @@ class HeroSection extends StatelessWidget {
           icon: FontAwesomeIcons.github,
           url: languageService.github,
           color: AppColors.github,
+        ),
+        SocialIconButton(
+          icon: FontAwesomeIcons.linkedin,
+          url: languageService.linkedin,
+          color: AppColors.linkedin,
+        ),
+        SocialIconButton(
+          icon: FontAwesomeIcons.facebook,
+          url: languageService.facebook,
+          color: AppColors.facebook,
         ),
         SocialIconButton(
           icon: FontAwesomeIcons.envelope,
